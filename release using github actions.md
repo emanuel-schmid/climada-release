@@ -1,6 +1,28 @@
 # Release and publish climada_python using GitHub actions
 
+## Docs
+
+- check the docs
+
+- (semi) auto update rst files
+
+  ```bash
+  python arbitrary\script\make_rst_files.py
+  ```
+
+  look at the changes and the untracked files, discard or accept
+
+- create docs locally and listen to the warnings
+
+  ```bash
+  cd doc
+  rm _build -r
+  make html
+  ```
+
 ## Dependencies
+
+- for climada_petals: update required climada version in setup.py
 
 - update requirements/env_climada.yml
 
@@ -16,7 +38,7 @@
 
 - update environment _on Jenkins_ and run
   
-  `conda activate deprep && deprep climada_env climada`
+  `python -m cdm.main climada_env climada`
 
   (afterwards, repeating above step should result in an empty table)
 
@@ -25,7 +47,7 @@
   find `$BACKTHEN` and `$LATEST` with
 
   ```sql
-  SELECT * FROM environments 
+  SELECT id, * FROM environments -- id is what we are looking for
   WHERE env_name = 'climada_env'
     AND `date` IN ('202x-xx-xx', (SELECT CURRENT_DATE));
   ```
@@ -47,10 +69,13 @@
 Resolve all conflicts "using theirs" (_develop_).\
 _main_ and _develop_ are supposed to be exactly the same after merging.
 
+> [!WARNING]
+> Make sure the top CHANGELOG subsection is `## Unreleased`!
+
 ## API Tokens
 
-  - PYPI_API_TOKEN: https://pypi.org/manage/account/
-  - PERSONAL_ACCESS_TOKEN: https://github.com/settings/tokens
+- PYPI_API_TOKEN: https://pypi.org/manage/account/
+- PERSONAL_ACCESS_TOKEN: https://github.com/settings/tokens
 
 &rArr; https://github.com/CLIMADA-project/climada_python/settings/secrets/actions
 
